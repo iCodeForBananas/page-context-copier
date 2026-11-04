@@ -1,0 +1,6 @@
+dist/
+test/_snapshots/
+__pycache__/
+.DS_Store
+.claude/
+*.zip

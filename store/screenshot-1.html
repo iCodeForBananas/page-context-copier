@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1280px; height: 800px; font: 14px/1.45 "Segoe UI", system-ui, sans-serif; background: #e8ecf3; color: #1d2433; overflow: hidden; }
+  .chrome { height: 56px; background: #dfe3ea; display: flex; align-items: center; gap: 12px; padding: 0 16px; border-bottom: 1px solid #c9ced8; }
+  .url { flex: 1; background: #fff; border-radius: 18px; height: 34px; display: flex; align-items: center; padding: 0 16px; color: #555; }
+  .ext { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; background: #fff; box-shadow: 0 0 0 3px #2563eb55; position: relative; }
+  .ext img { width: 20px; }
+  .badge { position: absolute; right: -6px; bottom: -6px; background: #1f7a4d; color: #fff; font-size: 11px; border-radius: 6px; padding: 0 5px; }
+  .tip { position: absolute; top: 62px; right: 20px; background: #202124; color: #fff; font-size: 12px; padding: 5px 9px; border-radius: 4px; }
+  .wrap { display: flex; height: 744px; }
+  .page { flex: 1; background: #fff; padding: 28px 36px; position: relative; }
+  .page nav { display: flex; gap: 22px; color: #2563eb; padding-bottom: 14px; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+  .page h1 { font-size: 28px; margin-bottom: 6px; }
+  .page h2 { font-size: 18px; margin: 18px 0 8px; }
+  table { border-collapse: collapse; width: 360px; }
+  td, th { border-bottom: 1px solid #eee; text-align: left; padding: 6px 4px; }
+  .card { margin-top: 18px; border: 1px solid #e3e6ec; border-radius: 10px; padding: 14px; width: 360px; }
+  .toast { position: absolute; right: 18px; bottom: 18px; background: #1f7a4d; color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px; box-shadow: 0 4px 16px rgba(0,0,0,.25); }
+  .panel { width: 560px; background: #0f172a; color: #dbe4f3; padding: 22px 24px; }
+  .panel h3 { color: #93b4ff; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+  pre { font: 12.5px/1.5 Consolas, "Cascadia Mono", monospace; white-space: pre-wrap; }
+  .k { color: #7dd3fc; } .h { color: #fbbf24; } .m { color: #94a3b8; }
+</style></head><body>
+<div class="chrome"><div class="url">acme.example/dashboard</div><div class="ext"><img src="../icons/icon48.png"><span class="badge">✓</span></div></div>
+<div class="wrap">
+  <div class="page">
+    <nav><span>Home</span><span>Reports ▾</span><span>More</span></nav>
+    <h1>Dashboard</h1>
+    <p>Welcome back, <b>Sam</b>. You have <a href="#">3 new messages</a>.</p>
+    <h2>Stats</h2>
+    <table><tr><th>Month</th><th>Revenue</th></tr><tr><td>Jan</td><td>$10k</td></tr><tr><td>Feb</td><td>$12k</td></tr></table>
+    <div class="card"><b>Apollo</b><br>Launch tracker</div>
+    <div class="toast">Copied page context — 1,912 chars (~478 tokens)</div>
+  </div>
+  <div class="panel">
+    <h3>On your clipboard, ready for your AI agent</h3>
+<pre><span class="h"># Page Context</span>
+Title: Acme Dashboard
+URL: https://acme.example/dashboard
+<span class="m">Captured: … · Viewport: 1280x800</span>
+
+<span class="h">## Heading outline</span>
+- Dashboard
+  - Stats
+
+<span class="h">## Content</span>
+<span class="k">[banner]</span>
+  <span class="k">[navigation "Primary"]</span>
+    - [Home](/) (current page)
+    - [Reports](/reports)
+      - [Q1](/reports/q1)
+      - [Q2](/reports/q2)
+    - <span class="k">[button "More" (collapsed, has menu popup)]</span>
+<span class="k">[main]</span>
+  # Dashboard
+  Welcome back, Sam. You have [3 new messages](/inbox).
+  <span class="k">[region "Stats"]</span>
+    ## Stats
+    <span class="k">[table "Monthly revenue"]</span>
+      | Month | Revenue |
+      | --- | --- |
+      | Jan | $10k |
+      | Feb | $12k |
+  <span class="k">[link → /projects/apollo]</span>
+    ### Apollo
+    Launch tracker
+  <span class="k">[form "Settings"]</span>
+    <span class="k">[email input "Email" = "sam@example.com" (required)]</span>
+    [x] Subscribe
+    <span class="k">[button "Save"]</span></pre>
+  </div>
+</div>
+</body></html>

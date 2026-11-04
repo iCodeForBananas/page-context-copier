@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1280px; height: 800px; font: 15px/1.6 "Segoe UI", system-ui, sans-serif; background: #f4f6fa; color: #1d2433; overflow: hidden; display: flex; }
+  .doc { flex: 1; padding: 56px 64px; background: #fff; position: relative; }
+  .doc h1 { font-size: 30px; margin-bottom: 18px; }
+  .doc h2 { font-size: 20px; margin: 22px 0 8px; }
+  .sel { background: #b4d2ff; }
+  .doc ul { margin: 6px 0 0 22px; }
+  .side ul { margin: 0; padding-left: 18px; }
+  .menu { position: absolute; left: 430px; top: 300px; width: 330px; background: #fff; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.22); padding: 6px 0; font-size: 14px; }
+  .menu div { padding: 7px 16px; display: flex; gap: 10px; align-items: center; color: #333; }
+  .menu .on { background: #e8f0fe; color: #0b57d0; font-weight: 600; }
+  .menu img { width: 16px; }
+  .menu hr { border: 0; border-top: 1px solid #e5e5e5; margin: 5px 0; }
+  .side { width: 420px; padding: 56px 40px; background: #0f172a; color: #e2e8f0; }
+  .side h2 { font-size: 28px; line-height: 1.25; margin-bottom: 18px; color: #fff; }
+  .side li { margin: 0 0 12px; }
+  kbd { background: #1e293b; border: 1px solid #334155; border-radius: 4px; padding: 1px 6px; font-size: 13px; }
+</style></head><body>
+<div class="doc">
+  <h1>Release checklist</h1>
+  <p>Everything that has to happen before we ship v2.4.</p>
+  <h2>Before the freeze</h2>
+  <ul class="sel"><li>Merge the billing migration</li><li>Update API docs
+    <ul><li>New <code>/v2/invoices</code> endpoint</li><li>Deprecation notice</li></ul></li><li>Run load tests</li></ul>
+  <h2>Launch day</h2>
+  <ul><li>Flip the feature flag</li><li>Post the changelog</li></ul>
+  <div class="menu">
+    <div>Copy</div><div>Search the web for “Merge the billing…”</div><hr>
+    <div class="on"><img src="../icons/icon16.png">Copy context of selection for AI</div>
+    <hr><div>Inspect</div>
+  </div>
+</div>
+<div class="side">
+  <h2>Copy the whole page, or just the part you selected</h2>
+  <ul>
+    <li>Click the toolbar button or press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> for the full page.</li>
+    <li>Right-click a selection to copy only that section, with its nesting kept.</li>
+    <li>Lists, tables, headings, links, form fields and ARIA roles come through as a clean outline.</li>
+    <li>Runs locally. Nothing is sent anywhere — it only writes to your clipboard.</li>
+  </ul>
+</div>
+</body></html>
