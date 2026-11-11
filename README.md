@@ -1,23 +1,27 @@
 # Page Context Copier
 
-A Chrome extension (Manifest V3) that copies a web page as clean, structured context for an AI agent. Click it to get the page's text as an indented outline that keeps the nesting of lists, sections and tables. The outline also carries accessibility info (ARIA roles, labels, states, alt text, form labels, link targets) and page metadata. Raw HTML is left out.
+A Chrome extension (Manifest V3) that copies a web page to the clipboard as a structured outline you can paste into an AI agent. The outline keeps the page's nesting (landmarks, lists, tables, forms) and its accessibility info (roles, labels, states, alt text), plus the page's metadata. It leaves out raw HTML.
 
 ![Screenshot](store/screenshot-1.png)
 
-## Install (unpacked)
+## Install
 
-1. Open `chrome://extensions`.
-2. Turn on **Developer mode** (top right).
-3. Click **Load unpacked** and pick this folder (the one with `manifest.json`).
-4. Pin the extension from the puzzle-piece menu so the button is always visible.
+1. Open `chrome://extensions` and turn on **Developer mode**.
+2. Click **Load unpacked** and choose this folder (the one with `manifest.json`).
+3. Pin the extension from the puzzle-piece menu.
 
 ## Use
 
-- **Toolbar button** or **Alt+Shift+C** copies the whole page. You can change the shortcut at `chrome://extensions/shortcuts`.
-- **Right-click → "Copy context of selection for AI"** copies only the part of the page around your selection.
-- A toast in the corner shows the size of what was copied (characters and roughly how many tokens). The toolbar badge shows ✓, or `!` on pages Chrome won't let extensions read (`chrome://`, the Web Store, the PDF viewer).
+| To copy | Do this |
+| --- | --- |
+| The whole page | Click the toolbar button, press **Alt+Shift+C**, or right-click → **Copy page context for AI** |
+| Just the part around a selection | Select text, right-click → **Copy context of selection for AI** |
 
-## Output format
+A toast on the page shows how much was copied (characters, and tokens estimated at 4 characters each). The toolbar badge flashes ✓ on success or `!` on failure. Failures usually mean the page is one Chrome won't let extensions script, such as `chrome://` pages, the Web Store, or the PDF viewer. Hover the button to see the error.
+
+You can change the shortcut at `chrome://extensions/shortcuts`.
+
+## What you get
 
 ```
 # Page Context
@@ -29,27 +33,16 @@ Viewport: 1280x800, scrolled to 0 of 1142px
 
 ## Metadata
 - og:title: Acme Dashboard
-- link[canonical]: https://example.com/dashboard
-
-## Structured data (JSON-LD)
-{"@context":"https://schema.org","@type":"WebPage",…}
 
 ## Heading outline
 - Dashboard
   - Stats
 
 ## Content
-[banner]
-  [navigation "Primary"]
-    - [Home](/) (current page)
-    - [Reports](/reports)
-      - [Q1](/reports/q1)
-    - [button "More" (collapsed, has menu popup)]
 [main]
   # Dashboard
   Welcome back, Sam. You have [3 new messages](/inbox).
   [region "Stats"]
-    ## Stats
     [table "Monthly revenue"]
       | Month | Revenue |
       | --- | --- |
@@ -57,42 +50,57 @@ Viewport: 1280x800, scrolled to 0 of 1142px
   [form "Settings"]
     [email input "Email" = "sam@example.com" (required)]
     [password input "Password" = (filled, value hidden)]
-    [x] Subscribe
     [combobox "Theme" = "Dark"] options: Light | Dark
 ```
 
-How the outline is built:
+The header can also include the meta description, the focused element and any selected text. Pages with JSON-LD get a **Structured data** section. In selection mode, the selected text comes first and the outline covers only the smallest element that contains the selection.
 
-- **Generic wrappers collapse.** `div`/`span` soup doesn't add indentation. Landmarks, lists, list items, tables, labelled groups, ARIA widgets, dialogs and same-origin iframes do.
-- **Inline content stays inline.** Links become `[text](url)`, images `![alt](src)` and code `` `code` ``. Adjacent text is joined into readable lines.
-- **Hidden content is skipped** (`display:none`, `visibility:hidden`, `[hidden]`). Screen-reader-only text is kept because it often explains icons.
-- **Open shadow DOM and slots are followed**, so web-component apps come through.
-- **Sensitive values are masked.** Password and credit-card/one-time-code fields show `(filled, value hidden)`, and hidden inputs are dropped.
-- Decorative images (`alt=""`) and small unlabeled icons are dropped.
+The outline follows these rules:
 
-## How it works
+- **Only meaningful structure is indented.** Generic `div`s and `span`s add nothing. Landmarks, lists, tables, labelled groups, ARIA widgets, dialogs and same-origin iframes each get a level.
+- **Inline content stays inline.** Links become `[text](url)`, images `![alt](src)` and code `` `code` ``.
+- **Hidden content is skipped**, except screen-reader-only text, which often explains what an icon means.
+- **Open shadow roots and slots are followed**, so pages built from web components come through.
+- **Sensitive values are masked.** Password, credit-card and one-time-code fields show `(filled, value hidden)`. Hidden inputs, decorative images and small unlabeled icons are dropped.
+
+## Privacy
+
+The extension reads a tab only when you trigger it, and it has no host permissions. It makes no network requests and stores nothing. It uses five permissions:
+
+- `activeTab` and `scripting` to read the current tab
+- `clipboardWrite` and `offscreen` to copy
+- `contextMenus` for the right-click items
+
+See [`PRIVACY.md`](PRIVACY.md).
+
+## Code
 
 | File | Role |
 | --- | --- |
-| `src/background.js` | Service worker. Handles the toolbar click, shortcut and context menu, injects the extractor, shows badge feedback |
-| `src/extract.js` | Injected into the tab. Walks the DOM and builds the outline, metadata and toast |
-| `src/offscreen.html/js` | Offscreen document that writes to the clipboard (MV3 service workers have no DOM) |
-
-Permissions: `activeTab` + `scripting` (read the current tab only when you click), `clipboardWrite` + `offscreen` (copy), `contextMenus` (right-click item). There are no host permissions, no network requests and no stored data.
+| `src/background.js` | Service worker. Handles the button, shortcut and menu, injects the extractor, and sets the badge |
+| `src/extract.js` | Runs in the page. Walks the DOM, builds the outline and shows the toast |
+| `src/offscreen.html`, `src/offscreen.js` | Writes to the clipboard, because MV3 service workers have no DOM |
 
 ## Development
 
-- `test/fixture.html` is a page that exercises most cases. Serve the repo (`python -m http.server 8765`), open `http://localhost:8765/test/fixture.html` and run `__pageContextCopier.extract('page')` in DevTools.
-- After editing, click the reload icon on the extension card in `chrome://extensions`.
-
-## Publishing to the Chrome Web Store
+`test/fixture.html` exercises most cases and loads `src/extract.js` directly, so you can test without the extension. Serve the repo:
 
 ```bash
-python scripts/package.py              # → dist/page-context-copier-<version>.zip
-python scripts/render_store_images.py  # → store/*.png from store/*.html
+python -m http.server 8765
 ```
 
-Listing copy, permission justifications and the data-use answers are in [`store/LISTING.md`](store/LISTING.md). The privacy policy is [`PRIVACY.md`](PRIVACY.md).
+Then open `http://localhost:8765/test/fixture.html` and run `__pageContextCopier.extract('page')` in DevTools. The `fixture` config in `.claude/launch.json` starts the same server.
+
+After editing, reload the extension from its card in `chrome://extensions`.
+
+## Publishing
+
+```bash
+python scripts/package.py              # dist/page-context-copier-<version>.zip (manifest, src, icons)
+python scripts/render_store_images.py  # store/*.png from store/*.html, using headless Chrome
+```
+
+Bump `version` in `manifest.json` before packaging. The listing copy, permission justifications and data-use answers are in [`store/LISTING.md`](store/LISTING.md).
 
 ## License
 
