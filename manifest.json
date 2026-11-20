@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Page Context Copier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "One click copies a page's text, structure, accessibility info and metadata as a clean outline to paste into an AI agent.",
   "permissions": ["activeTab", "scripting", "clipboardWrite", "offscreen", "contextMenus"],
   "background": {

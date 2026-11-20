@@ -4,7 +4,7 @@ Paste these into the Developer Dashboard (https://chrome.google.com/webstore/dev
 
 ## Package
 
-`dist/page-context-copier-1.0.0.zip`. Rebuild it with `python scripts/package.py`.
+`dist/page-context-copier-1.0.1.zip`. Rebuild it with `python scripts/package.py`.
 
 ## Store listing tab
 
@@ -76,4 +76,4 @@ Copy the content of the current web page to the clipboard as a structured text o
 - Certify all three disclosures: data is not sold to third parties, not used or transferred for purposes unrelated to the single purpose, and not used for creditworthiness or lending.
 
 **Privacy policy URL:**
-https://github.com/<your-username>/page-context-copier/blob/main/PRIVACY.md
+https://github.com/iCodeForBananas/page-context-copier/blob/main/PRIVACY.md
