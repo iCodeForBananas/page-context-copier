@@ -53,6 +53,7 @@ Everything runs locally in your browser. The extension only reads the page when 
 - Store icon: `icons/icon128.png`
 - Screenshots (1280×800): `store/screenshot-1.png`, `store/screenshot-2.png`
 - Small promo tile (440×280): `store/promo-small.png`
+- Marquee promo tile (1400×560, optional): `store/promo-marquee.png`
 
 ## Privacy tab
 

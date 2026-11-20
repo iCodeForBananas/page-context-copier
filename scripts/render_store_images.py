@@ -1,7 +1,8 @@
 """Render store/*.html to Web Store images with headless Chrome.
 
 Outputs store/screenshot-1.png, store/screenshot-2.png (1280x800) and
-store/promo-small.png (440x280) as 24-bit PNGs (the store rejects alpha).
+store/promo-small.png (440x280) and store/promo-marquee.png (1400x560)
+as 24-bit PNGs (the store rejects alpha).
 Usage: python scripts/render_store_images.py [path-to-chrome]
 """
 import pathlib
@@ -13,7 +14,7 @@ import zlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHROME = sys.argv[1] if len(sys.argv) > 1 else r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-IMAGES = {"screenshot-1": (1280, 800), "screenshot-2": (1280, 800), "promo-small": (440, 280)}
+IMAGES = {"screenshot-1": (1280, 800), "screenshot-2": (1280, 800), "promo-small": (440, 280), "promo-marquee": (1400, 560)}
 
 
 def chunks(data):

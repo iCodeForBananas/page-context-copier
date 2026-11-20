@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1400px; height: 560px; overflow: hidden; background: linear-gradient(135deg, #1d4ed8, #2563eb 55%, #3b82f6); color: #fff; font-family: "Segoe UI", system-ui, sans-serif; display: flex; align-items: center; padding: 0 84px; gap: 72px; }
+  .brand { flex: 0 0 520px; display: flex; flex-direction: column; gap: 26px; }
+  .row { display: flex; align-items: center; gap: 26px; }
+  img { width: 112px; height: 112px; border-radius: 24px; box-shadow: 0 0 0 3px #ffffff55; }
+  h1 { font-size: 54px; line-height: 1.05; letter-spacing: -0.5px; }
+  p { font-size: 28px; line-height: 1.35; color: #dbe7ff; }
+  .card { flex: 1; background: #0f172a; border-radius: 18px; box-shadow: 0 24px 60px #0b1a4d80, 0 0 0 1px #ffffff22; overflow: hidden; }
+  .bar { height: 40px; background: #1e293b; display: flex; align-items: center; gap: 9px; padding: 0 18px; }
+  .bar i { width: 12px; height: 12px; border-radius: 50%; background: #475569; }
+  pre { padding: 24px 28px; font: 19px/1.55 Consolas, "Cascadia Mono", monospace; color: #cbd5e1; white-space: pre; }
+  .h { color: #93c5fd; font-weight: 600; } .r { color: #fbbf24; } .l { color: #86efac; } .m { color: #64748b; }
+</style></head><body>
+  <div class="brand">
+    <div class="row"><img src="../icons/icon128.png"><h1>Page Context<br>Copier</h1></div>
+    <p>One click turns any web page into a clean, structured outline for your AI agent.</p>
+  </div>
+  <div class="card"><div class="bar"><i></i><i></i><i></i></div><pre><span class="h"># Page Context</span>
+<span class="m">Title:</span> Acme Dashboard
+<span class="m">URL:</span>   https://acme.example/dashboard
+
+<span class="h">## Content</span>
+<span class="r">[main]</span>
+  <span class="h"># Dashboard</span>
+  Welcome back. You have <span class="l">[3 new messages](/inbox)</span>.
+  <span class="r">[table "Monthly revenue"]</span>
+    | Month | Revenue |
+    | Jan   | $10k    |
+  <span class="r">[form "Settings"]</span>
+    <span class="r">[combobox "Theme" = "Dark"]</span></pre></div>
+</body></html>
